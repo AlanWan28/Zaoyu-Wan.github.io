@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>万早雨 - 个人简历</title>
+    <style>
+        :root {
+            --primary: #0a192f;
+            --secondary: #172a45;
+            --text: #ccd6f6;
+            --highlight: #64ffda;
+            --muted: #8892b0;
+            --background: #0a192f;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        header {
+            padding: 2rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            background-color: rgba(10, 25, 47, 0.8);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--highlight);
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: translateY(-2px);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.9rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--highlight);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--highlight);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 0; /* 修改为0，让hero部分完全展示 */
+            margin-top: 80px; /* 添加顶部边距，避免被header覆盖 */
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .greeting {
+            color: var(--highlight);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .name {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .title {
+            font-size: 2.5rem;
+            color: var(--muted);
+            margin-bottom: 2rem;
+        }
+        
+        .description {
+            font-size: 1.1rem;
+            color: var(--muted);
+            max-width: 600px;
+            margin-bottom: 3rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: transparent;
+            color: var(--highlight);
+            border: 1px solid var(--highlight);
+            border-radius: 4px;
+            padding: 1rem 1.5rem;
+            font-size: 0.9rem;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 1rem;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+            background-color: rgba(100, 255, 218, 0.1);
+            transition: width 0.3s ease;
+            z-index: -1;
+        }
+        
+        .btn:hover::before {
+            width: 100%;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        section {
+            padding: 100px 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title:after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 70%;
+            height: 2px;
+            background-color: var(--highlight);
+        }
+        
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+            margin-right: 2rem;
+        }
+        
+        .skills {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .skill-category {
+            margin-bottom: 2rem;
+        }
+        
+        .skill-category h3 {
+            color: var(--highlight);
+            margin-bottom: 1rem;
+        }
+        
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .skill-item {
+            margin-right: 1rem;
+            margin-bottom: 0.8rem;
+            background-color: var(--secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .skill-item:hover {
+            transform: translateY(-2px);
+            background-color: rgba(100, 255, 218, 0.1);
+            color: var(--highlight);
+            box-shadow: 0 4px 10px rgba(100, 255, 218, 0.1);
+        }
+        
+        .experience-item {
+            margin-bottom: 4rem;
+            transition: transform 0.3s ease;
+            padding: 1rem;
+            border-radius: 5px;
+        }
+        
+        .experience-item:hover {
+            transform: translateX(5px);
+            background-color: rgba(100, 255, 218, 0.05);
+        }
+        
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .experience-title {
+            font-size: 1.5rem;
+            color: var(--text);
+        }
+        
+        .experience-company {
+            color: var(--highlight);
+        }
+        
+        .experience-date {
+            color: var(--muted);
+        }
+        
+        .experience-location {
+            color: var(--muted);
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+        
+        .experience-description ul {
+            list-style-type: none;
+            margin-left: 1rem;
+        }
+        
+        .experience-description li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .experience-description li:before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+            color: var(--highlight);
+        }
+        
+        .contact-info {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background-color: var(--secondary);
+            border-radius: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .contact-info:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .contact-info p {
+            margin-bottom: 1rem;
+        }
+        
+        footer {
+            padding: 2rem 0;
+            text-align: center;
+            color: var(--muted);
+        }
+        
+        @media screen and (max-width: 768px) {
+            .name {
+                font-size: 3rem;
+            }
+            
+            .title {
+                font-size: 1.8rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                color: var(--text);
+                font-size: 1.5rem;
+                cursor: pointer;
+            }
+            
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: var(--primary);
+                padding: 1rem;
+                z-index: 1000;
+            }
+            
+            .nav-links.active li {
+                margin: 1rem 0;
+            }
+        }
+        
+        @media screen and (max-width: 480px) {
+            .name {
+                font-size: 2.5rem;
+            }
+            
+            .title {
+                font-size: 1.5rem;
+            }
+            
+            .btn {
+                display: block;
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+            
+            .experience-header {
+                flex-direction: column;
+            }
+            
+            .experience-date {
+                margin-top: 0.5rem;
+            }
+        }
+        
+        /* 添加卡片悬停效果 */
+        .card-hover {
+            transition: all 0.3s ease;
+            border-radius: 10px;
+            padding: 1.5rem;
+        }
+        
+        .card-hover:hover {
+            background-color: var(--secondary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 确保页面初始可见 */
+        .hero, #about {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">万早雨</div>
+                <ul class="nav-links">
+                    <li><a href="#about">关于我</a></li>
+                    <li><a href="#education">教育背景</a></li>
+                    <li><a href="#experience">工作经历</a></li>
+                    <li><a href="#research">科研经历</a></li>
+                    <li><a href="#skills">技能特长</a></li>
+                    <li><a href="#contact">联系方式</a></li>
+                </ul>
+                <div class="mobile-menu-btn">☰</div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero visible">
+        <div class="container">
+            <div class="hero-content">
+                <p class="greeting">您好，我是</p>
+                <h1 class="name">万早雨</h1>
+                <h2 class="title">数学与统计学专业学生</h2>
+                <p class="description">本人对金融数据分析、商业投资、企业运营和风险管理有着夯实的理解和经验累积，通过自学和实践掌握了数据建模、全球商业研究和处理技能，能够有效推动项目和业务增长。在数据驱动决策方面具有敏锐洞察力，致力于将复杂分析转化为实际业务价值。</p>
+                <a href="#contact" class="btn">联系我</a>
+                <a href="#education" class="btn">查看学历</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="section visible">
+        <div class="container">
+            <h2 class="section-title">关于我</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>我是一名就读于伦敦国王学院的数学与统计学专业学生，对数据分析、风险管理和金融建模充满热情。通过在中国银行和江西省出版传媒集团的实习经历，我积累了丰富的实践经验，并将所学理论知识应用于实际业务中。</p>
+                    <p>我善于利用Python、R等工具进行数据分析和建模，解决复杂的业务问题。我相信数据是商业决策的基础，而我的优势在于能够将复杂的数据分析成果转化为可执行的业务洞察。</p>
+                </div>
+                <div class="skills">
+                    <div class="skill-category">
+                        <h3>专业技能</h3>
+                        <div class="skill-list">
+                            <span class="skill-item">数据分析</span>
+                            <span class="skill-item">风险管理</span>
+                            <span class="skill-item">统计建模</span>
+                            <span class="skill-item">量化金融</span>
+                            <span class="skill-item">时间序列分析</span>
+                            <span class="skill-item">预算优化</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3>软件技能</h3>
+                        <div class="skill-list">
+                            <span class="skill-item">Python</span>
+                            <span class="skill-item">RStudio</span>
+                            <span class="skill-item">LaTeX</span>
+                            <span class="skill-item">MATLAB</span>
+                            <span class="skill-item">Microsoft Office</span>
+                            <span class="skill-item">PowerBI</span>
+                            <span class="skill-item">MySQL</span>
+                            <span class="skill-item">Cursor</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="education" class="section">
+        <div class="container">
+            <h2 class="section-title">教育背景</h2>
+            
+            <div class="experience-item card-hover">
+                <div class="experience-header">
+                    <h3 class="experience-title">数学与统计学学士（荣誉学位） <span class="experience-company">伦敦国王学院</span></h3>
+                    <p class="experience-date">2022.09 - 2025.05</p>
+                </div>
+                <p class="experience-location">英国，伦敦 (QS世界排名第40名)</p>
+                <div class="experience-description">
+                    <p><strong>核心课程：</strong> Python与数值分析、量化金融、时间序列、概率论、统计建模、离散数学、应用微分方程、实分析、复分析、线性代数</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 按照要求，将工作经历部分放在教育经历之后 -->
+    <section id="experience" class="section">
+        <div class="container">
+            <h2 class="section-title">工作经历</h2>
+            
+            <div class="experience-item">
+                <div class="experience-header">
+                    <h3 class="experience-title">风险管理部 <span class="experience-company">中国银行（英国）有限公司</span></h3>
+                    <p class="experience-date">2023.07 - 2023.09</p>
+                </div>
+                <p class="experience-location">英国，伦敦</p>
+                <div class="experience-description">
+                    <ul>
+                        <li><strong>外汇风险量化分析与模型迭代：</strong>协助升级外汇敞口预测模型，基于历史汇率波动数据，应用动态波动率算法（GARCH）捕捉波动率聚类特征，优化外汇敞口预测逻辑，提高了模型预测精度，并将回测误差率从8.2%降至4.5%；结合风险价值模型（VAR）开发压力测试模块，模拟英镑单日贬值5%、利率骤升200BP等极端情景，量化潜在风险敞口约￡30万，推动了分行动态拨备金策略调整，年度风险准备金占用减少约£15万。</li>
+                        <li><strong>风险数据治理与校验：</strong>深度参与设计自动化校验规则（Python），通过反洗钱名单实时比对和资产负债率动态监控，日均处理200+笔跨境信贷申请数据，使人工复核时间缩短65%，数据完整率从82%提升至98%；针对历史数据冗余问题，提出分层抽样清洗方案，清理无效数据40%，季度风险压力测试周期缩短3天。</li>
+                        <li><strong>数据源整合与标准化：</strong>负责整合SWIFT报文、客户KYC信息等5个核心业务系统数据，统一字段命名及货币单位，数据可用性提升25%；设计数据映射表，通过构建智能匹配规则实现自动化匹配，匹配准确率从70%提升至92%，支撑监管报告生成效率提升20%。</li>
+                        <li><strong>中小企业信贷风险研究：</strong>利用逻辑回归与Cox比例风险模型，分析伦敦地区中小企业贷款数据，识别关键风险因子（行业集中度和现金流波动率），构建违约概率评分卡；输出一份信贷风险评估报告，提出客户分层管理建议，试点客户违约率下降2.1%。</li>
+                        <li><strong>合规性检查：</strong>协助团队完成100+笔重点跨境交易合规审核，针对英国金融行为监管局（FCA）与客户尽职调查（CDD）要求，发现并协助修正8处潜在漏洞（如客户身份文件缺失、交易目的描述不完整），推动部门季度合规达标率从95%提升至98%。</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="experience-item">
+                <div class="experience-header">
+                    <h3 class="experience-title">审计与风险管理部 <span class="experience-company">江西省出版传媒集团有限公司</span></h3>
+                    <p class="experience-date">2024.07 - 2024.09</p>
+                </div>
+                <p class="experience-location">江西，南昌</p>
+                <div class="experience-description">
+                    <ul>
+                        <li><strong>成本预测与预算优化：</strong>基于历史出版成本数据，深度协助构建多元线性回归模型预测印刷与发行成本，识别成本超支风险并提前预警，预算执行准确率提升10%；通过时间序列分析（ARIMA模型）预测图书销量波动，结合季节性因素（如开学季、节假日）优化印刷计划与库存调配策略，减少滞销图书占比15%，季度库存周转率提升12%。</li>
+                        <li><strong>数据可视化：</strong>使用Python（Matplotlib）开发出版业务健康度监控平台，整合图书库存周转率、印刷成本波动及区域销量趋势等核心指标，管理层决策响应时间缩短25%。</li>
+                        <li><strong>报告自动化：</strong>参与并优化自动化经营分析报告生成脚本（Python+Pandas），实现周度销售数据与版税结算的自动汇总，人工报告编制工时减少35%，支撑季度业务复盘效率提升20%。</li>
+                        <li><strong>出版业务流程审计与优化：</strong>负责7个部门的内部审计工作，评估出版流程（选题审批、印刷成本控制和发行渠道管理）的合规性与效率，发现15处改进点，推动流程效率提升12%。</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="experience-item">
+                <div class="experience-header">
+                    <h3 class="experience-title">数据分析课程助教 <span class="experience-company">ASDAN 中国有限公司</span></h3>
+                    <p class="experience-date">2023.06 - 2023.07</p>
+                </div>
+                <p class="experience-location">上海</p>
+                <div class="experience-description">
+                    <ul>
+                        <li><strong>学术辅导：</strong>基于R语言为20名学员提供数据分析项目全流程指导，涵盖数据清洗、可视化及基础建模，定期追踪学习进度并针对性解决技术难点；通过定期反馈会议和指定个性化学习计划，确保所有学员严格遵循项目截止日期。</li>
+                        <li><strong>项目管理：</strong>主导并负责夏校项目全周期执行，通过整合课程材料、师资安排与技术支持，搭建高效沟通渠道，协调多方资源解决突发问题，推动项目全环节无缝衔接。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="research" class="section">
+        <div class="container">
+            <h2 class="section-title">科研与竞赛经历</h2>
+            
+            <div class="experience-item card-hover">
+                <div class="experience-header">
+                    <h3 class="experience-title">概率、统计研究及其应用研究科研项目</h3>
+                    <p class="experience-date">2021.06 - 2021.09</p>
+                </div>
+                <p class="experience-location">英国，牛津</p>
+                <div class="experience-description">
+                    <ul>
+                        <li>领导一个由5名成员组成的团队学术研究项目</li>
+                        <li>使用大规模数据集进行探索性数据分析和模式识别</li>
+                        <li>应用Python构建统计模型，对数据趋势进行预测分析</li>
+                        <li>成功完成研究报告并在项目答辩中获得评委一致好评</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="experience-item card-hover">
+                <div class="experience-header">
+                    <h3 class="experience-title">第18届国际未来商业领袖峰会</h3>
+                    <p class="experience-date">2020.08</p>
+                </div>
+                <p class="experience-location">上海</p>
+                <div class="experience-description">
+                    <ul>
+                        <li>参与为期一周的高强度商业模拟竞赛</li>
+                        <li>负责团队产品设计和市场策略制定</li>
+                        <li>基于数据分析进行市场定位和产品迭代</li>
+                        <li>凭借出色的产品规划和团队协作能力获得"年度最佳产品经理"奖项</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="section">
+        <div class="container">
+            <h2 class="section-title">技能特长</h2>
+            <div class="about-content">
+                <div class="skills" style="flex: 0 0 100%;">
+                    <div class="skill-category">
+                        <h3>软件技能</h3>
+                        <div class="skill-list">
+                            <span class="skill-item">Python（熟练）</span>
+                            <span class="skill-item">RStudio（熟练）</span>
+                            <span class="skill-item">LaTeX（熟练）</span>
+                            <span class="skill-item">MATLAB（熟练）</span>
+                            <span class="skill-item">Microsoft Office（精通）</span>
+                            <span class="skill-item">PowerBI（良好）</span>
+                            <span class="skill-item">MySQL（良好）</span>
+                            <span class="skill-item">Cursor（AI集成编码环境）</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3>语言能力</h3>
+                        <div class="skill-list">
+                            <span class="skill-item">英语（雅思 6.5）</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3>兴趣爱好</h3>
+                        <div class="skill-list">
+                            <span class="skill-item">钢琴(10级)</span>
+                            <span class="skill-item">篮球</span>
+                            <span class="skill-item">羽毛球</span>
+                            <span class="skill-item">网球</span>
+                            <span class="skill-item">摄影</span>
+                            <span class="skill-item">视频剪辑</span>
+                            <span class="skill-item">AI作画/作曲</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title">联系方式</h2>
+            <div class="contact-info">
+                <p>电话: +86 18170941702</p>
+                <p>微信: alanwan0128</p>
+                <p>邮箱: alanwan0128@163.com</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 万早雨 - 个人简历</p>
+        </div>
+    </footer>
+
+    <script>
+        // 页面加载完成后添加可见类
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.section');
+            
+            // 确保hero和about部分一开始就可见
+            const hero = document.querySelector('.hero');
+            const about = document.querySelector('#about');
+            
+            if(hero) hero.classList.add('visible');
+            if(about) about.classList.add('visible');
+            
+            // 滚动时显示元素动画
+            function checkScroll() {
+                sections.forEach(section => {
+                    const sectionTop = section.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+                    
+                    if (sectionTop < windowHeight * 0.75) {
+                        section.classList.add('visible');
+                    }
+                });
+            }
+            
+            // 初始检查
+            checkScroll();
+            
+            // 滚动时检查
+            window.addEventListener('scroll', checkScroll);
+        });
+
+        // 确保在滚动时固定导航栏
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            header.classList.toggle('scrolled', window.scrollY > 0);
+        });
+
+        // 移动端菜单切换
+        const menuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        if (menuBtn) {
+            menuBtn.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+            });
+        }
+    </script>
+</body>
+</html>
