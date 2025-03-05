@@ -445,6 +445,7 @@
                 <p class="description">「用数据丈量风险，以算法锚定未来」</p>
                 <a href="#contact" class="btn">联系我</a>
                 <a href="#education" class="btn">查看学历</a>
+                <a href="#experience" class="btn">查看经历</a>
             </div>
         </div>
     </section>
@@ -499,6 +500,10 @@
                 <p class="experience-location">英国，伦敦 (QS世界排名第40名)</p>
                 <div class="experience-description">
                     <p><strong>核心课程：</strong> Python与数值分析、金融数学、时间序列、概率论、统计建模、离散数学、应用微分方程、实分析、复分析、线性代数等</p>
+                </div>
+                
+            <div class="experience-item card-hover">
+                <div class="experience-header">
                     <h3 class="experience-title">新斯科舍省（加拿大）高中文凭（双文凭）<span class="experience-company">南昌二中中加国际高中学校</span></h3>
                     <p class="experience-date">2019.09 - 2022.06</p>
                 </div>
@@ -510,7 +515,6 @@
         </div>
     </section>
 
-    <!-- 按照要求，将工作经历部分放在教育经历之后 -->
     <section id="experience" class="section">
         <div class="container">
             <h2 class="section-title">工作经历</h2>
@@ -707,5 +711,49 @@
             });
         }
     </script>
+
+<!-- 返回首页小球 -->
+<a href="#" id="homeBall" class="home-ball">
+  <div class="ball-text">HOME</div>
+</a>
+
+<style>
+.home-ball {
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
+  width: 50px;
+  height: 50px;
+  background: #64ffda; /* 新颜色 */
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(100,255,218,0.3); /* 同步更新阴影色 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all 0.3s;
+  z-index: 9999;
+}
+
+.ball-text {
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+/* 悬停动画 */
+.home-ball:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(100,255,218,0.5); /* 更新悬停阴影 */
+}
+
+/* 点击动画 */
+.home-ball:active {
+  transform: scale(0.9);
+}
+</style>
+
 </body>
 </html>
