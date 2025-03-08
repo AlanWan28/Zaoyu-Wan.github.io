@@ -120,50 +120,6 @@
         .hero-content {
             max-width: 800px;
             animation: fadeIn 1s ease-out;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-        }
-        
-        /* 添加头像样式 */
-        .avatar-container {
-            margin-left: 2rem;
-            flex-shrink: 0;
-        }
-        
-        .avatar {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            border: 3px solid var(--highlight);
-            overflow: hidden;
-            box-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        
-        .avatar:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(100, 255, 218, 0.5);
-        }
-        
-        .avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        /* 添加头像占位效果 */
-        .avatar-placeholder {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, var(--secondary), var(--primary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--highlight);
-            font-size: 3rem;
         }
         
         @keyframes fadeIn {
@@ -427,7 +383,7 @@
             color: var(--muted);
         }
         
-        /* 移动菜单样式修复 */
+        /* 移动菜单样式增强 */
         .mobile-menu-btn {
             display: none;
             color: var(--text);
@@ -436,29 +392,13 @@
             z-index: 1001;
             transition: all 0.3s ease;
             -webkit-tap-highlight-color: transparent; /* 移除移动设备上的点击高亮 */
-            padding: 10px;
-            margin: -10px;
         }
         
         .mobile-menu-btn:hover {
             color: var(--highlight);
         }
         
-        /* 修复移动端菜单 */
-        .nav-links {
-            transition: transform 0.3s ease-in-out;
-        }
-        
         @media screen and (max-width: 768px) {
-            .hero-content {
-                flex-direction: column-reverse;
-                text-align: center;
-            }
-            
-            .avatar-container {
-                margin: 0 0 2rem 0;
-            }
-            
             .name {
                 font-size: 3rem;
             }
@@ -468,21 +408,20 @@
             }
             
             .nav-links {
-                display: block;
+                display: none;
                 position: fixed;
                 top: 0;
                 left: 0;
-                width: 80%;
-                max-width: 300px;
-                height: 100vh;
-                background-color: var(--secondary);
+                right: 0;
+                bottom: 0;
+                background-color: rgba(10, 25, 47, 0.95);
                 flex-direction: column;
-                justify-content: flex-start;
-                align-items: flex-start;
+                justify-content: center;
+                align-items: center;
                 z-index: 1000;
-                padding: 5rem 2rem 2rem;
-                transform: translateX(-100%);
-                box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+                padding: 2rem;
+                transition: all 0.3s ease;
+                height: 100vh;
             }
             
             .mobile-menu-btn {
@@ -490,38 +429,18 @@
             }
             
             .nav-links.active {
-                transform: translateX(0);
+                display: flex;
+                animation: fadeIn 0.3s forwards;
             }
             
             .nav-links li {
                 margin: 1.5rem 0;
-                width: 100%;
+                text-align: center;
                 margin-left: 0; /* 重置左边距 */
             }
             
             .nav-links a {
                 font-size: 1.2rem;
-                display: block;
-                width: 100%;
-            }
-            
-            /* 添加遮罩 */
-            .menu-overlay {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.7);
-                z-index: 999;
-                opacity: 0;
-                transition: opacity 0.3s ease;
-            }
-            
-            .menu-overlay.active {
-                display: block;
-                opacity: 1;
             }
         }
         
@@ -618,6 +537,12 @@
         html {
             scroll-behavior: smooth;
         }
+
+        /* 增加菜单按钮的点击区域 */
+        .mobile-menu-btn {
+            padding: 10px;
+            margin: -10px;
+        }
     </style>
 </head>
 <body>
@@ -626,9 +551,6 @@
     
     <!-- 返回首页箭头小球 -->
     <a href="#" id="homeBall" class="home-ball"></a>
-    
-    <!-- 菜单遮罩层 -->
-    <div id="menuOverlay" class="menu-overlay"></div>
 
     <header>
         <div class="container">
@@ -646,62 +568,6 @@
             </nav>
         </div>
     </header>
-    
-    <!-- 主体内容开始 -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <p class="greeting">你好，我是</p>
-                    <h1 class="name">万早雨</h1>
-                    <h2 class="title">软件工程师 & 数据科学家</h2>
-                    <p class="description">专注于人工智能和数据分析的软件开发，热衷于将数据转化为有价值的见解和应用。</p>
-                    <a href="#contact" class="btn">联系我</a>
-                    <a href="#experience" class="btn">查看经历</a>
-                </div>
-                <div class="avatar-container">
-                    <div class="avatar">
-                        <!-- 如果有头像图片，使用下面的img标签 -->
-                        <!-- <img src="你的头像图片路径.jpg" alt="万早雨的头像"> -->
-                        
-                        <!-- 头像占位图，没有图片时显示 -->
-                        <div class="avatar-placeholder">WZY</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- 你的其他内容部分 -->
-    <section id="about">
-        <!-- 关于我的内容 -->
-    </section>
-    
-    <section id="education">
-        <!-- 教育背景内容 -->
-    </section>
-    
-    <section id="experience">
-        <!-- 工作经历内容 -->
-    </section>
-    
-    <section id="research">
-        <!-- 科研经历内容 -->
-    </section>
-    
-    <section id="skills">
-        <!-- 技能特长内容 -->
-    </section>
-    
-    <section id="contact">
-        <!-- 联系方式内容 -->
-    </section>
-    
-    <footer>
-        <div class="container">
-            <p>© 2025 万早雨. 保留所有权利。</p>
-        </div>
-    </footer>
 
     <!-- 添加粒子动态背景脚本 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
@@ -798,55 +664,48 @@
         
         // 等待DOM加载完成
         document.addEventListener('DOMContentLoaded', function() {
-            // 获取元素
+            // 汉堡菜单功能
             const mobileMenuBtn = document.getElementById('mobileMenuBtn');
             const navLinks = document.getElementById('navLinks');
-            const menuOverlay = document.getElementById('menuOverlay');
             
-            // 修复后的菜单切换功能
-            function openMenu() {
-                navLinks.classList.add('active');
-                menuOverlay.classList.add('active');
-                mobileMenuBtn.innerHTML = '✕'; // 关闭图标
-            }
-            
-            function closeMenu() {
-                navLinks.classList.remove('active');
-                menuOverlay.classList.remove('active');
-                mobileMenuBtn.innerHTML = '☰'; // 菜单图标
-            }
-            
-            // 汉堡菜单点击事件
+            // 汉堡菜单切换
             if (mobileMenuBtn) {
                 mobileMenuBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
                     e.stopPropagation();
-                    
-                    if (navLinks.classList.contains('active')) {
-                        closeMenu();
-                    } else {
-                        openMenu();
-                    }
+                    toggleMenu();
                 });
             }
             
-            // 点击遮罩关闭菜单
-            if (menuOverlay) {
-                menuOverlay.addEventListener('click', function() {
-                    closeMenu();
-                });
+            // 菜单切换函数
+            function toggleMenu() {
+                navLinks.classList.toggle('active');
+                
+                // 切换汉堡图标
+                if (navLinks.classList.contains('active')) {
+                    mobileMenuBtn.innerHTML = '✕'; // 关闭图标
+                } else {
+                    mobileMenuBtn.innerHTML = '☰'; // 菜单图标
+                }
             }
             
             // 点击导航链接关闭菜单
             const navLinkItems = document.querySelectorAll('.nav-link');
             navLinkItems.forEach(link => {
-                link.addEventListener('click', function() {
-                    closeMenu();
+                link.addEventListener('click', function(e) {
+                    navLinks.classList.remove('active');
+                    mobileMenuBtn.innerHTML = '☰';
                 });
             });
             
-            // 阻止菜单内点击事件冒泡
-            navLinks.addEventListener('click', function(e) {
-                e.stopPropagation();
+            // 点击页面任意位置关闭菜单
+            document.addEventListener('click', function(e) {
+                if (navLinks.classList.contains('active') && 
+                    !e.target.closest('#navLinks') && 
+                    !e.target.closest('#mobileMenuBtn')) {
+                    navLinks.classList.remove('active');
+                    mobileMenuBtn.innerHTML = '☰';
+                }
             });
             
             // 返回顶部按钮
