@@ -391,6 +391,7 @@
             cursor: pointer;
             z-index: 1001;
             transition: all 0.3s ease;
+            -webkit-tap-highlight-color: transparent; /* 移除移动设备上的点击高亮 */
         }
         
         .mobile-menu-btn:hover {
@@ -420,6 +421,7 @@
                 z-index: 1000;
                 padding: 2rem;
                 transition: all 0.3s ease;
+                height: 100vh;
             }
             
             .mobile-menu-btn {
@@ -434,6 +436,7 @@
             .nav-links li {
                 margin: 1.5rem 0;
                 text-align: center;
+                margin-left: 0; /* 重置左边距 */
             }
             
             .nav-links a {
@@ -499,6 +502,7 @@
             z-index: 9999;
             opacity: 0;
             transform: translateY(100px);
+            -webkit-tap-highlight-color: transparent; /* 移除移动设备上的点击高亮 */
         }
         
         .home-ball.visible {
@@ -533,6 +537,12 @@
         html {
             scroll-behavior: smooth;
         }
+
+        /* 增加菜单按钮的点击区域 */
+        .mobile-menu-btn {
+            padding: 10px;
+            margin: -10px;
+        }
     </style>
 </head>
 <body>
@@ -559,17 +569,50 @@
         </div>
     </header>
 
+    <!-- 在这里可以添加你的其他内容 -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <p class="greeting">你好，我的名字是</p>
+                <h1 class="name">万早雨</h1>
+                <h2 class="title">个人简历</h2>
+                <p class="description">这是我的个人简历页面，请随意浏览以了解更多关于我的信息。</p>
+                <a href="#contact" class="btn">联系我</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 示例部分：关于我 -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">关于我</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>这里可以填写个人介绍...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 其他部分可以根据需要添加 -->
+
+    <footer>
+        <div class="container">
+            <p>© 2025 万早雨 - 保留所有权利</p>
+        </div>
+    </footer>
+
     <!-- 添加粒子动态背景脚本 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        // 配置粒子效果
+        // 配置粒子效果 - 减慢速度
         particlesJS('particles-js', {
             particles: {
                 number: {
-                    value: 80,
+                    value: 60, // 减少粒子数量
                     density: {
                         enable: true,
-                        value_area: 800
+                        value_area: 900
                     }
                 },
                 color: {
@@ -587,7 +630,7 @@
                     random: true,
                     anim: {
                         enable: true,
-                        speed: 1,
+                        speed: 0.5, // 降低速度
                         opacity_min: 0.1,
                         sync: false
                     }
@@ -597,7 +640,7 @@
                     random: true,
                     anim: {
                         enable: true,
-                        speed: 2,
+                        speed: 1, // 降低速度
                         size_min: 0.1,
                         sync: false
                     }
@@ -611,7 +654,7 @@
                 },
                 move: {
                     enable: true,
-                    speed: 1,
+                    speed: 0.6, // 降低速度
                     direction: 'none',
                     random: true,
                     straight: false,
@@ -645,7 +688,7 @@
                         }
                     },
                     push: {
-                        particles_nb: 4
+                        particles_nb: 3
                     }
                 }
             },
@@ -661,28 +704,34 @@
             // 汉堡菜单切换
             if (mobileMenuBtn) {
                 mobileMenuBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
                     e.stopPropagation();
-                    navLinks.classList.toggle('active');
-                    
-                    // 切换汉堡图标
-                    if (navLinks.classList.contains('active')) {
-                        mobileMenuBtn.innerHTML = '✕'; // 关闭图标
-                    } else {
-                        mobileMenuBtn.innerHTML = '☰'; // 菜单图标
-                    }
+                    toggleMenu();
                 });
+            }
+            
+            // 菜单切换函数
+            function toggleMenu() {
+                navLinks.classList.toggle('active');
+                
+                // 切换汉堡图标
+                if (navLinks.classList.contains('active')) {
+                    mobileMenuBtn.innerHTML = '✕'; // 关闭图标
+                } else {
+                    mobileMenuBtn.innerHTML = '☰'; // 菜单图标
+                }
             }
             
             // 点击导航链接关闭菜单
             const navLinkItems = document.querySelectorAll('.nav-link');
             navLinkItems.forEach(link => {
-                link.addEventListener('click', function() {
+                link.addEventListener('click', function(e) {
                     navLinks.classList.remove('active');
                     mobileMenuBtn.innerHTML = '☰';
                 });
             });
             
-            // 点击页面其他区域关闭菜单
+            // 点击页面任意位置关闭菜单
             document.addEventListener('click', function(e) {
                 if (navLinks.classList.contains('active') && 
                     !e.target.closest('#navLinks') && 
@@ -743,22 +792,6 @@
         });
     </script>
 </body>
-</style>
-    <header>
-        <div class="container">
-            <nav>
-                <div class="logo">ALWANZY</div>
-                <ul class="nav-links">
-                    <li><a href="#about" class="nav-link">关于我</a></li>
-                    <li><a href="#education" class="nav-link">教育背景</a></li>
-                    <li><a href="#experience" class="nav-link">工作经历</a></li>
-                    <li><a href="#research" class="nav-link">科研经历</a></li>
-                    <li><a href="#skills" class="nav-link">技能特长</a></li>
-                    <li><a href="#contact" class="nav-link">联系方式</a></li>
-                </ul>
-                <div class="mobile-menu-btn">☰</div>
-            </nav>
-        </div>
     </header>
 
     <section class="hero visible">
