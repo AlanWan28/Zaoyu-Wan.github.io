@@ -525,8 +525,48 @@
         html {
             scroll-behavior: smooth;
         }
-    <style>
-        
+<!-- 返回首页箭头小球 -->
+<a href="#" id="homeBall" class="home-ball"></a>
+
+<style>
+.home-ball {
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
+  width: 50px;
+  height: 50px;
+  background: #64ffda;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(100,255,218,0.3);
+  transition: all 0.3s;
+  z-index: 9999;
+  
+  /* 箭头定位 */
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    border-left: 3px solid white;
+    border-top: 3px solid white;
+    transform: translate(-50%, -30%) rotate(45deg);
+  }
+}
+
+/* 悬停动画 */
+.home-ball:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(100,255,218,0.5);
+}
+
+/* 点击动画 */
+.home-ball:active {
+  transform: scale(0.9);
+}
+</style>
     <header>
         <div class="container">
             <nav>
