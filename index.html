@@ -383,90 +383,47 @@
             color: var(--muted);
         }
         
-        /* 移动菜单样式增强 */
-        .mobile-menu-btn {
-            display: none;
-            color: var(--text);
-            font-size: 1.5rem;
-            cursor: pointer;
-            z-index: 1001;
-            transition: all 0.3s ease;
-            -webkit-tap-highlight-color: transparent; /* 移除移动设备上的点击高亮 */
-        }
-        
-        .mobile-menu-btn:hover {
-            color: var(--highlight);
-        }
-        
+       /* 修改后的移动菜单样式 -------------------------- */
         @media screen and (max-width: 768px) {
-            .name {
-                font-size: 3rem;
-            }
-            
-            .title {
-                font-size: 1.8rem;
-            }
-            
             .nav-links {
-                display: none;
+                display: flex;
+                opacity: 0;
+                visibility: hidden;
                 position: fixed;
                 top: 0;
                 left: 0;
                 right: 0;
                 bottom: 0;
-                background-color: rgba(10, 25, 47, 0.95);
+                background-color: rgba(10, 25, 47, 0.98);
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
                 z-index: 1000;
                 padding: 2rem;
                 transition: all 0.3s ease;
-                height: 100vh;
+                transform: translateX(100%);
             }
-            
+
+            .nav-links.active {
+                opacity: 1;
+                visibility: visible;
+                transform: translateX(0);
+            }
+
             .mobile-menu-btn {
                 display: block;
+                z-index: 1001;
+                transition: transform 0.3s ease;
             }
-            
-            .nav-links.active {
-                display: flex;
-                animation: fadeIn 0.3s forwards;
-            }
-            
-            .nav-links li {
-                margin: 1.5rem 0;
-                text-align: center;
-                margin-left: 0; /* 重置左边距 */
-            }
-            
-            .nav-links a {
-                font-size: 1.2rem;
+
+            /* 汉堡图标动画 */
+            .mobile-menu-btn.active {
+                transform: rotate(90deg);
             }
         }
-        
-        @media screen and (max-width: 480px) {
-            .name {
-                font-size: 2.5rem;
-            }
-            
-            .title {
-                font-size: 1.5rem;
-            }
-            
-            .btn {
-                display: block;
-                width: 100%;
-                margin-bottom: 1rem;
-            }
-            
-            .experience-header {
-                flex-direction: column;
-            }
-            
-            .experience-date {
-                margin-top: 0.5rem;
-            }
-        }
+    </style>
+</head>
+<body>
         
         /* 添加卡片悬停效果 */
         .card-hover {
@@ -545,6 +502,53 @@
         }
     </style>
 </head>
+       <script>
+        // 修复后的JavaScript代码 --------------------------
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取元素
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navLinks = document.getElementById('navLinks');
+            const homeBall = document.getElementById('homeBall');
+
+            // 菜单切换函数
+            function toggleMenu() {
+                navLinks.classList.toggle('active');
+                mobileMenuBtn.classList.toggle('active');
+            }
+
+            // 汉堡菜单点击事件
+            mobileMenuBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                toggleMenu();
+            });
+
+            // 菜单项点击事件
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    mobileMenuBtn.classList.remove('active');
+                });
+            });
+
+            // 点击页面任意位置关闭菜单
+            document.addEventListener('click', function(e) {
+                if (!navLinks.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                    navLinks.classList.remove('active');
+                    mobileMenuBtn.classList.remove('active');
+                }
+            });
+
+            // 窗口resize处理
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 768) {
+                    navLinks.classList.remove('active');
+                    mobileMenuBtn.classList.remove('active');
+                }
+            });
+
+            // 原有粒子动画和滚动监听代码保持不变...
+        });
+    </script>
 <body>
     <!-- 粒子动态背景 -->
     <div id="particles-js"></div>
