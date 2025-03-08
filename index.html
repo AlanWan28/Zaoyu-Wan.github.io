@@ -525,47 +525,183 @@
         html {
             scroll-behavior: smooth;
         }
-<!-- 返回首页箭头小球 -->
-<a href="#" id="homeBall" class="home-ball"></a>
+    </style>
+</head>
+<body>
+    <!-- 粒子动态背景 -->
+    <div id="particles-js"></div>
+    
+    <!-- 返回首页箭头小球 -->
+    <a href="#" id="homeBall" class="home-ball"></a>
 
-<style>
-.home-ball {
-  position: fixed;
-  right: 30px;
-  bottom: 30px;
-  width: 50px;
-  height: 50px;
-  background: #64ffda;
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(100,255,218,0.3);
-  transition: all 0.3s;
-  z-index: 9999;
-  
-  /* 箭头定位 */
-  &::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 16px;
-    height: 16px;
-    border-left: 3px solid white;
-    border-top: 3px solid white;
-    transform: translate(-50%, -30%) rotate(45deg);
-  }
-}
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">ALWANZY</div>
+                <ul class="nav-links">
+                    <li><a href="#about" class="nav-link">关于我</a></li>
+                    <li><a href="#education" class="nav-link">教育背景</a></li>
+                    <li><a href="#experience" class="nav-link">工作经历</a></li>
+                    <li><a href="#research" class="nav-link">科研经历</a></li>
+                    <li><a href="#skills" class="nav-link">技能特长</a></li>
+                    <li><a href="#contact" class="nav-link">联系方式</a></li>
+                </ul>
+                <div class="mobile-menu-btn">☰</div>
+            </nav>
+        </div>
+    </header>
 
-/* 悬停动画 */
-.home-ball:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 16px rgba(100,255,218,0.5);
-}
-
-/* 点击动画 */
-.home-ball:active {
-  transform: scale(0.9);
-}
+    <!-- 添加粒子动态背景脚本 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // 配置粒子效果
+        particlesJS('particles-js', {
+            particles: {
+                number: {
+                    value: 80,
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: '#64ffda'
+                },
+                shape: {
+                    type: 'circle',
+                    stroke: {
+                        width: 0,
+                        color: '#000000'
+                    }
+                },
+                opacity: {
+                    value: 0.3,
+                    random: true,
+                    anim: {
+                        enable: true,
+                        speed: 1,
+                        opacity_min: 0.1,
+                        sync: false
+                    }
+                },
+                size: {
+                    value: 3,
+                    random: true,
+                    anim: {
+                        enable: true,
+                        speed: 2,
+                        size_min: 0.1,
+                        sync: false
+                    }
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: '#64ffda',
+                    opacity: 0.2,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 1,
+                    direction: 'none',
+                    random: true,
+                    straight: false,
+                    out_mode: 'out',
+                    bounce: false,
+                    attract: {
+                        enable: false,
+                        rotateX: 600,
+                        rotateY: 1200
+                    }
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: 'grab'
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: 'push'
+                    },
+                    resize: true
+                },
+                modes: {
+                    grab: {
+                        distance: 140,
+                        line_linked: {
+                            opacity: 0.5
+                        }
+                    },
+                    push: {
+                        particles_nb: 4
+                    }
+                }
+            },
+            retina_detect: true
+        });
+        
+        // 修复汉堡菜单
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+            
+            // 汉堡菜单点击事件
+            mobileMenuBtn.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+            });
+            
+            // 点击导航链接后关闭菜单
+            const navLinkItems = document.querySelectorAll('.nav-link');
+            navLinkItems.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        navLinks.classList.remove('active');
+                    }
+                });
+            });
+            
+            // 点击外部关闭菜单
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.mobile-menu-btn') && !e.target.closest('.nav-links')) {
+                    navLinks.classList.remove('active');
+                }
+            });
+            
+            // 返回顶部按钮显示/隐藏
+            const homeBall = document.getElementById('homeBall');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    homeBall.classList.add('visible');
+                } else {
+                    homeBall.classList.remove('visible');
+                }
+            });
+            
+            // 滚动监听实现元素显示动画
+            const sections = document.querySelectorAll('section');
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+            
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+            
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
 </style>
     <header>
         <div class="container">
